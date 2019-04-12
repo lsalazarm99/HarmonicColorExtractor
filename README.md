@@ -18,7 +18,7 @@ allprojects {
 ```
 ```
 dependencies {
-  implementation 'com.github.LeonardoSM04:HarmonicColorExtractor:1.0.0-alpha'
+  implementation 'com.github.LeonardoSM04:HarmonicColorExtractor:1.0.0'
 }
 ```
 ## Usage
