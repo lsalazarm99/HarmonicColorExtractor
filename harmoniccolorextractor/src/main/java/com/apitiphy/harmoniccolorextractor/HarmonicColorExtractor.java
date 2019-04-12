@@ -44,15 +44,15 @@ public class HarmonicColorExtractor {
     private Palette.Filter mBlackWhiteFilter = (rgb, hsl) -> !isWhiteOrBlack(hsl);
 
     public class Builder {
-        Bitmap albumArt;
+        Bitmap bitmap;
         int[] backgroundRegion;
         int[] foregroundRegion;
         int resizeBitmapArea;
 
         public Builder(){}
 
-        public Builder setAlbumArt(Bitmap albumArt) {
-            this.albumArt = albumArt;
+        public Builder setBitmap(Bitmap bitmap) {
+            this.bitmap = bitmap;
             return this;
         }
 
@@ -71,8 +71,8 @@ public class HarmonicColorExtractor {
         }
 
         public Builder setLeftSide(float textColorStartAreaFraction) {
-            this.backgroundRegion = new int[]{0,0,albumArt.getWidth() / 2, albumArt.getHeight()};
-            this.foregroundRegion = new int[]{(int) (albumArt.getWidth() * textColorStartAreaFraction), 0, albumArt.getWidth(), albumArt.getHeight()};
+            this.backgroundRegion = new int[]{0,0, bitmap.getWidth() / 2, bitmap.getHeight()};
+            this.foregroundRegion = new int[]{(int) (bitmap.getWidth() * textColorStartAreaFraction), 0, bitmap.getWidth(), bitmap.getHeight()};
             return this;
         }
 
@@ -81,8 +81,8 @@ public class HarmonicColorExtractor {
         }
 
         public Builder setTopSide(float textColorStartAreaFraction) {
-            this.backgroundRegion = new int[]{0, 0, albumArt.getWidth(), albumArt.getHeight() / 2};
-            this.foregroundRegion = new int[]{0, (int) (albumArt.getHeight() * textColorStartAreaFraction), albumArt.getWidth(), albumArt.getHeight()};
+            this.backgroundRegion = new int[]{0, 0, bitmap.getWidth(), bitmap.getHeight() / 2};
+            this.foregroundRegion = new int[]{0, (int) (bitmap.getHeight() * textColorStartAreaFraction), bitmap.getWidth(), bitmap.getHeight()};
             return this;
         }
 
@@ -91,8 +91,8 @@ public class HarmonicColorExtractor {
         }
 
         public Builder setRightSide(float textColorStartAreaFraction) {
-            this.backgroundRegion = new int[]{albumArt.getWidth() / 2, 0, albumArt.getWidth(), albumArt.getHeight()};
-            this.foregroundRegion = new int[]{0, 0, (int) (albumArt.getWidth() * textColorStartAreaFraction), albumArt.getHeight()};
+            this.backgroundRegion = new int[]{bitmap.getWidth() / 2, 0, bitmap.getWidth(), bitmap.getHeight()};
+            this.foregroundRegion = new int[]{0, 0, (int) (bitmap.getWidth() * textColorStartAreaFraction), bitmap.getHeight()};
             return this;
         }
 
@@ -101,8 +101,8 @@ public class HarmonicColorExtractor {
         }
 
         public Builder setBottomSide(float textColorStartAreaFraction) {
-            this.backgroundRegion = new int[]{0, albumArt.getHeight() / 2, albumArt.getWidth(), albumArt.getHeight()};
-            this.foregroundRegion = new int[]{0, 0, albumArt.getWidth(), (int) (albumArt.getHeight() * textColorStartAreaFraction)};
+            this.backgroundRegion = new int[]{0, bitmap.getHeight() / 2, bitmap.getWidth(), bitmap.getHeight()};
+            this.foregroundRegion = new int[]{0, 0, bitmap.getWidth(), (int) (bitmap.getHeight() * textColorStartAreaFraction)};
             return this;
         }
 
@@ -116,7 +116,7 @@ public class HarmonicColorExtractor {
             Palette palette;
             int backgroundColor;
 
-            paletteBuilder = Palette.from(albumArt);
+            paletteBuilder = Palette.from(bitmap);
             if(backgroundRegion != null) {
                 paletteBuilder.setRegion(backgroundRegion[0], backgroundRegion[1], backgroundRegion[2], backgroundRegion[3]);
             }
@@ -237,7 +237,7 @@ public class HarmonicColorExtractor {
     }
 
     private boolean hasEnoughPopulation(Palette.Swatch swatch) {
-        // We want a fraction that is at least 1% of the image
+        // We want a fraction that is at least 1% of the bitmap
         return swatch != null && (swatch.getPopulation() / (float) RESIZE_BITMAP_AREA > MINIMUM_IMAGE_FRACTION);
     }
 
